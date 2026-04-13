@@ -1,25 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Camera</title>
+    <title>AI Safety Camera</title>
     <style>
         body {
+            background: #0f172a;
+            color: white;
             text-align: center;
             font-family: Arial;
-            background: #111;
-            color: white;
+        }
+        h1 {
+            color: #38bdf8;
         }
         img {
             width: 70%;
-            border: 3px solid #00ffcc;
+            border-radius: 12px;
+            border: 3px solid #38bdf8;
+        }
+        #status {
+            font-size: 30px;
+            margin: 20px;
+            padding: 10px;
             border-radius: 10px;
+            display: inline-block;
+        }
+        .safe {
+            background: green;
+        }
+        .danger {
+            background: red;
         }
     </style>
 </head>
 <body>
 
-    <h1>🚀 AI People Tracking</h1>
+    <h1>🚀 AI SAFETY CAMERA</h1>
+
+    <div id="status" class="safe">SAFE</div>
+
+    <br>
+
     <img src="/video">
+
+    <script>
+        setInterval(() => {
+            fetch('/status')
+                .then(res => res.text())
+                .then(data => {
+                    let status = document.getElementById("status");
+                    status.innerText = data;
+
+                    if (data === "DANGER") {
+                        status.className = "danger";
+                    } else {
+                        status.className = "safe";
+                    }
+                });
+        }, 500);
+    </script>
 
 </body>
 </html>
